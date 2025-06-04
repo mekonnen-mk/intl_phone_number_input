@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:intl_phone_number_input/src/host_dialog/widgets/host_divider.dart';
 import 'package:intl_phone_number_input/src/models/country_model.dart';
 import 'package:intl_phone_number_input/src/utils/test/test_helper.dart';
 import 'package:intl_phone_number_input/src/utils/util.dart';
@@ -87,35 +89,21 @@ class _CountrySearchListWidgetState extends State<CountrySearchListWidget> {
             itemBuilder: (BuildContext context, int index) {
               Country country = filteredCountries[index];
 
-              return DirectionalCountryListTile(
-                country: country,
-                locale: widget.locale,
-                showFlags: widget.showFlags!,
-                useEmoji: widget.useEmoji!,
+              return Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  DirectionalCountryListTile(
+                    country: country,
+                    locale: widget.locale,
+                    showFlags: widget.showFlags!,
+                    useEmoji: widget.useEmoji!,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 5.0),
+                    child: HostDivider(),
+                  ),
+                ],
               );
-              // return ListTile(
-              //   key: Key(TestHelper.countryItemKeyValue(country.alpha2Code)),
-              //   leading: widget.showFlags!
-              //       ? _Flag(country: country, useEmoji: widget.useEmoji)
-              //       : null,
-              //   title: Align(
-              //     alignment: AlignmentDirectional.centerStart,
-              //     child: Text(
-              //       '${Utils.getCountryName(country, widget.locale)}',
-              //       textDirection: Directionality.of(context),
-              //       textAlign: TextAlign.start,
-              //     ),
-              //   ),
-              //   subtitle: Align(
-              //     alignment: AlignmentDirectional.centerStart,
-              //     child: Text(
-              //       '${country.dialCode ?? ''}',
-              //       textDirection: TextDirection.ltr,
-              //       textAlign: TextAlign.start,
-              //     ),
-              //   ),
-              //   onTap: () => Navigator.of(context).pop(country),
-              // );
             },
           ),
         ),
@@ -150,25 +138,33 @@ class DirectionalCountryListTile extends StatelessWidget {
     return ListTile(
       key: Key(TestHelper.countryItemKeyValue(country.alpha2Code)),
       leading: (showFlags ? _Flag(country: country, useEmoji: useEmoji) : null),
-      title: Align(
-        alignment: AlignmentDirectional.centerStart,
-        child: Text(
-          '${Utils.getCountryName(country, locale)}',
+      dense: true,
+      title: Text(
+        '${Utils.getCountryName(country, locale)}',
+        textDirection: Directionality.of(context),
+        textAlign: TextAlign.start,
+        style: titleStyle,
+      ),
+      trailing: Text('${country.dialCode ?? ''}',
           textDirection: Directionality.of(context),
           textAlign: TextAlign.start,
-        ),
-      ),
-      subtitle: Align(
-        alignment: AlignmentDirectional.centerStart,
-        child: Text(
-          '${country.dialCode ?? ''}',
-          textDirection: TextDirection.ltr,
-          textAlign: TextAlign.start,
-        ),
-      ),
+          style: titleStyle.copyWith(
+            color: Colors.grey[800],
+          )),
       onTap: () => Navigator.of(context).pop(country),
     );
   }
+
+  /// Returns the style for the title text in the list tile.
+  ///
+  TextStyle get titleStyle => TextStyle(
+        fontFamily: 'Proxima Nova',
+        fontSize: 16.spMin,
+        fontWeight: FontWeight.w400,
+        color: Colors.black,
+        letterSpacing: 0,
+        height: 1.0,
+      );
 }
 
 class _Flag extends StatelessWidget {

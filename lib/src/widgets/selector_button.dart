@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl_phone_number_input/src/host_dialog/host_dialog.dart';
 import 'package:intl_phone_number_input/src/models/country_model.dart';
 import 'package:intl_phone_number_input/src/utils/selector_config.dart';
 import 'package:intl_phone_number_input/src/utils/test/test_helper.dart';
@@ -122,11 +123,11 @@ class SelectorButton extends StatelessWidget {
     return showDialog(
       context: inheritedContext,
       barrierDismissible: true,
-      builder: (BuildContext context) => AlertDialog(
-        content: Directionality(
-          textDirection: Directionality.of(inheritedContext),
-          child: Container(
-            width: double.maxFinite,
+      builder: (context) => HostDialog(
+        title: 'Select your country code',
+        child: Expanded(
+          child: Directionality(
+            textDirection: Directionality.of(inheritedContext),
             child: CountrySearchListWidget(
               countries,
               locale,
