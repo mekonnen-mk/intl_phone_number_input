@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:dlibphonenumber/dlibphonenumber.dart' as p;
 import 'package:intl_phone_number_input/src/utils/phone_number.dart';
 
@@ -17,9 +15,7 @@ class PhoneNumberUtil {
     final number = phoneUtil.parse(phoneNumber, isoCode.toUpperCase());
     try {
       return phoneUtil.isValidNumber(number);
-    } catch (e, st) {
-      log('error while validating phone number: $e', error: e, stackTrace: st);
-    }
+    } catch (e) {}
     return null;
   }
 
