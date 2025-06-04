@@ -12,8 +12,8 @@ class PhoneNumberUtil {
     if (phoneNumber.length < 2) {
       return false;
     }
-    final number = phoneUtil.parse(phoneNumber, isoCode.toUpperCase());
     try {
+      final number = phoneUtil.parse(phoneNumber, isoCode.toUpperCase());
       return phoneUtil.isValidNumber(number);
     } catch (e) {}
     return null;
