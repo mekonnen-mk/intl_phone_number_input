@@ -16,7 +16,7 @@ class PhoneNumberUtil {
       final number = phoneUtil.parse(phoneNumber, isoCode.toUpperCase());
       return phoneUtil.isValidNumber(number);
     } catch (e) {}
-    return true;
+    return false;
   }
 
   /// [normalizePhoneNumber] normalizes a string of characters representing a phone number
